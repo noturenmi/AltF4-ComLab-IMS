@@ -13,3 +13,31 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 })->name('register');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('/laboratories', function () {
+    return view('dashboard');
+})->name('laboratories');
+
+Route::get('/computers', function () {
+    return view('dashboard');
+})->name('computers');
+
+Route::get('/items', function () {
+    return view('dashboard');
+})->name('items');
+
+Route::get('/transactions', function () {
+    return view('dashboard');
+})->name('transactions');
+
+Route::get('/reports', function () {
+    return view('dashboard');
+})->name('reports');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
