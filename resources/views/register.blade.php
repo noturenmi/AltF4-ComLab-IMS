@@ -1,13 +1,14 @@
 @extends('layouts.master')
 
 @php
-    $fields = ['fname', 'lname', 'email', 'username', 'password', 'confirm-password', 'contact'];
+    $fields = ['fname', 'mid-init', 'lname', 'email', 'username', 'password', 'confirm-password', 'contact'];
     $label = '';
     $type = '';
 @endphp
 @section('content')
     <h1 class="text-center mt-5 fw-bold">AltF4 Solutions</h1>
-    <form action="" method="post" class="mt-5 py-4 card col col-8 offset-2 text-light" style="background: #1D546C">
+    <form action="" method="post" class="card my-5 py-4 col col-8 offset-2 text-light"
+        style="background: #1D546C; border-radius: 1.5%">
         <div class="card-body">
             <h1 class="text-center fw-bold">Register</h1>
             <div class="container d-flex flex-column mt-5">
@@ -19,6 +20,12 @@
                     @if ($field === 'fname')
                         @php
                             $label = 'First Name';
+                        @endphp
+                    @endif
+
+                    @if ($field === 'mid-init')
+                        @php
+                            $label = 'Middle Initial (Optional)';
                         @endphp
                     @endif
 
@@ -67,8 +74,7 @@
 
                     <label for="{{ $field }}" class="fw-bold">{{ $label }}</label>
                     <input type="{{ $type }}" name="{{ $field }}" id="{{ $label }}"
-                        placeholder="Type your {{ $label }}"
-                        class="mb-4 bg-transparent border-0 border-bottom text-light">
+                        class="form-control mb-4 bg-transparent border-0 border-bottom rounded-0 text-light">
                 @endforeach
             </div>
             <div class='d-flex flex-column container gap-5 mt-5'>

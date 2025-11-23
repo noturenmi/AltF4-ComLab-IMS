@@ -2,7 +2,8 @@
 
 @section('content')
     <h1 class="text-center mt-5 fw-bold">AltF4 Solutions</h1>
-    <form action="" method="post" class="mt-5 py-4 card col col-8 offset-2 text-light" style="background: #1D546C">
+    <form action="" method="post" class="card mt-5 py-4 col col-8 offset-2 text-light"
+        style="background: #1D546C; border-radius: 1.5%">
         <div class="card-body">
             <h1 class="text-center fw-bold">Login</h1>
             <div class="container d-flex flex-column">
