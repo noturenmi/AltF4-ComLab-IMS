@@ -1,4 +1,4 @@
-<div class="card h-100">
+<div class="card h-100" style="min-width: 15rem;">
     <div class="card-body">
         <div class="d-flex justify-content-between flex-wrap-reverse">
             <h6 class="card-title mb-3 mt-2 fw-bold">{{ $label }}</h6>

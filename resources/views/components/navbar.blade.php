@@ -1,5 +1,5 @@
 @php
-    $pages = ['dashboard', 'laboratories', 'computers', 'items', 'transactions', 'reports'];
+    $pages = ['dashboard', 'laboratories', 'computers', 'items', 'categories', 'transactions', 'reports'];
 @endphp
 <nav class="navbar navbar-dark p-3" style="background: #0C2B4E;">
     <div class="container-fluid">

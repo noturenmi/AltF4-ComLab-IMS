@@ -1,36 +1,75 @@
 @extends('layouts.master')
 
+@php
+    $cards = [
+        [
+            'label' => 'Total Items',
+            'icon' => 'box',
+            'color' => '#2D6EFC',
+            'bg' => '#DBEAFE',
+            'counter' => 25,
+        ],
+        [
+            'label' => 'Total Computers',
+            'icon' => 'pc-display',
+            'color' => '#00A63E',
+            'bg' => '#DBFCE7',
+            'counter' => 10,
+        ],
+        [
+            'label' => 'Total Labs',
+            'icon' => 'building',
+            'color' => '#F54A00',
+            'bg' => '#FFEDD4',
+            'counter' => 5,
+        ],
+        [
+            'label' => 'Low Stock',
+            'icon' => 'exclamation-triangle',
+            'color' => '#E7030E',
+            'bg' => '#FFE2E2',
+            'counter' => 2,
+        ],
+    ];
+@endphp
+
 @section('content')
     <h1 class="text-center my-4 fw-bold">Dashboard</h1>
-    <div class="container-fluid mt-3 d-grid gap-3"
-        style="grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas:
-        'items computers transactions'
-        'labs stock transactions';">
+    <div id="dashboard-outer-wrapper" class=" d-flex mt-3 p-5 gap-3 justify-content-center">
 
-        <div style="grid-area: items">
-            <x-dashboard-counter label="Total Items" counter="7" color="#2D6EFC" bg="#DBEAFE">
-                <i class="bi bi-box"></i></ x-dashboard-counter>
+        <div class="d-flex flex-wrap gap-3 align-self-stretch" style="flex-grow: 0; flex-shrink: 2">
+
+            @foreach ($cards as $card)
+                <div style="flex-grow: 2">
+                    <x-dashboard-counter label="{{ $card['label'] }}" counter="{{ $card['counter'] }}"
+                        color="{{ $card['color'] }}" bg="{{ $card['bg'] }}">
+                        <i class="bi bi-{{ $card['icon'] }}"></i>
+                        </ x-dashboard-counter>
+                </div>
+            @endforeach
+
         </div>
 
-        <div style="grid-area: computers">
-            <x-dashboard-counter label="Total Computers" counter="7" color="#00A63E" bg="#DBFCE7">
-                <i class="bi bi-pc-display"></i></ x-dashboard-counter>
-        </div>
-
-        <div style="grid-area: transactions;">
+        <div class="align-self-stretch" style="flex-grow: 3; min-height: 20vh;">
             <x-dashboard-counter label="Transactions Today" counter="0" color="#9A16FA" bg="#F3E8FF">
                 <i class="bi bi-file-text"></i></ x-dashboard-counter>
         </div>
-
-        <div style="grid-area: labs">
-            <x-dashboard-counter label="Total Labs" counter="0" color="#F54A00" bg="#FFEDD4">
-                <i class="bi bi-building"></i></ x-dashboard-counter>
-        </div>
-
-        <div style="grid-area: stock">
-            <x-dashboard-counter label="Low Stock" counter="0" color="#E7030E" bg="#FFE2E2">
-                <i class="bi bi-exclamation-triangle"></i></x-dashboard-counter>
-        </div>
     </div>
+    <script>
+        const outerWrapper = document.querySelector('#dashboard-outer-wrapper');
+        const mediaQuery = window.matchMedia('(max-width: 576px)');
+
+        function setWrap() {
+
+            if (mediaQuery.matches) {
+                outerWrapper.classList.add('flex-wrap');
+            } else {
+                outerWrapper.classList.remove('flex-wrap');
+            }
+        }
+
+        setWrap();
+
+        mediaQuery.addEventListener('change', setWrap);
+    </script>
 @endsection

@@ -30,6 +30,10 @@ Route::get('/items', function () {
     return view('dashboard');
 })->name('items');
 
+Route::get('/categories', function () {
+    return view('dashboard');
+})->name('categories');
+
 Route::get('/transactions', function () {
     return view('dashboard');
 })->name('transactions');
