@@ -23,7 +23,7 @@ Route::get('/laboratories', function () {
 })->name('laboratories');
 
 Route::get('/computers', function () {
-    return view('dashboard');
+    return view('computers');
 })->name('computers');
 
 Route::get('/items', function () {
