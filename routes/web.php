@@ -27,7 +27,7 @@ Route::get('/computers', function () {
 })->name('computers');
 
 Route::get('/items', function () {
-    return view('dashboard');
+    return view('items');
 })->name('items');
 
 Route::get('/categories', function () {
