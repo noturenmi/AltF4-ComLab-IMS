@@ -19,7 +19,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/laboratories', function () {
-    return view('dashboard');
+    return view('laboratories');
 })->name('laboratories');
 
 Route::get('/computers', function () {
