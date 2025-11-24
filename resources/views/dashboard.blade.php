@@ -34,8 +34,8 @@
 @endphp
 
 @section('content')
-    <h1 class="text-center my-4 fw-bold">Dashboard</h1>
-    <div id="dashboard-outer-wrapper" class=" d-flex mt-3 p-5 gap-3 justify-content-center">
+    <h1 class="m-4 fw-bold" style="color: #636363;">Dashboard</h1>
+    <div id="dashboard-outer-wrapper" class=" d-flex p-5 gap-3 justify-content-center">
 
         <div class="d-flex flex-wrap gap-3 align-self-stretch" style="flex-grow: 0; flex-shrink: 2">
 

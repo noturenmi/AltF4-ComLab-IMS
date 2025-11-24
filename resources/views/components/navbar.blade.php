@@ -25,7 +25,7 @@
                 @foreach ($pages as $page)
                     <li class="nav-item fs-4 my-1">
                         <a href="{{ route($page) }}" class="nav-link text-light
-                        @if (request()->is($page)) active"
+                        @if (request()->is($page)) active fw-bold"
                         aria-current="page"
                         @else " @endif
                     >{{ ucwords($page) }}</a>

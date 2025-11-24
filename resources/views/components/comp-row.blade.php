@@ -22,14 +22,14 @@
     <th scope='row'>{{ $name }}</th>
     <td>Lab {{ $lab }}</td>
     <td class="text-secondary">{{ $model }}</td>
-    <td>
-        <p class="badge rounded-pill px-2"
+    <td class="text-center">
+        <p class="badge rounded px-2"
             style="color: {{ $badge['color'] }}; background: {{ $badge['bg'] }}; border: solid 1px {{ $badge['border'] }};">
             {{ $status }}</p>
     </td>
-    <td class="text-secondary">{{ $assignedDate }}</td>
+    <td class="text-secondary text-center">{{ $assignedDate }}</td>
     <td>
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap justify-content-center">
             <a href="" class="text-primary mx-1">
                 <i class="bi bi-pencil-square"></i>
             </a>

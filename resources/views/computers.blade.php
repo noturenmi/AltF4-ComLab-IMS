@@ -30,21 +30,21 @@
 @endphp
 
 @section('content')
-    <div class="container d-flex flex-wrap align-items-center justify-content-between">
-        <h1 class="my-4 mx-4 fw-bold" style="color: #636363;">Computers</h1>
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <h1 class="m-4 fw-bold" style="color: #636363;">Computers</h1>
         <a href="" class="btn rounded-3 mx-4 text-light fw-bold" style="background: #5C6BA1;">
             <i class="bi bi-plus-square-fill mx-1" style="color: #D9D9D9;"></i> Add Computer</a>
     </div>
-    <div class="container card pt-4">
-        <table class="table">
+    <div class="container card mt-3 pt-4">
+        <table class="table table-sm">
             <thead>
                 <tr>
                     <th scope='col'>Name</th>
                     <th scope='col'>Lab</th>
                     <th scope='col'>Model</th>
-                    <th scope='col'>Status</th>
-                    <th scope='col'>Assigned Date</th>
-                    <th scope='col'>Actions</th>
+                    <th scope='col' class="text-center">Status</th>
+                    <th scope='col' class="text-center">Assigned Date</th>
+                    <th scope='col' class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
