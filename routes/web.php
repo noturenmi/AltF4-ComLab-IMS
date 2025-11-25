@@ -35,7 +35,7 @@ Route::get('/categories', function () {
 })->name('categories');
 
 Route::get('/transactions', function () {
-    return view('dashboard');
+    return view('transactions');
 })->name('transactions');
 
 Route::get('/reports', function () {
