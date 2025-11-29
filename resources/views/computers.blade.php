@@ -1,12 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="d-flex flex-wrap align-items-center justify-content-between">
-        <h1 class="m-4 fw-bold" style="color: #636363;">Computers</h1>
-        <a href="" class="btn rounded-3 mx-4 text-light fw-bold" style="background: #5C6BA1;">
-            <i class="bi bi-plus-square-fill mx-1" style="color: #D9D9D9;"></i> Add Computer</a>
-    </div>
+    <h1 class="m-4 fw-bold text-center" style="color: #636363;">Computers</h1>
+
     <div class="container card mt-3 pt-4">
+        <a href="" class="btn rounded-3 mx-4 text-light fw-bold align-self-end" style="background: #5C6BA1;">
+            <i class="bi bi-plus-square-fill mx-1" style="color: #D9D9D9;"></i> Add Computer</a>
         <table class="table align-middle">
             <thead>
                 <tr>

@@ -5,7 +5,7 @@
 @endphp
 
 @section('content')
-    <h1 class="m-4 fw-bold" style="color: #636363;">Items</h1>
+    <h1 class="m-4 fw-bold text-center" style="color: #636363;">Items</h1>
     <div class="container card pt-4">
         <div class="d-flex gap-3">
             <input type="text" id="filter-category" class="form-control" placeholder="Filter Category">

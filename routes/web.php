@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
@@ -27,9 +28,7 @@ Route::get('/computers', [ComputerController::class, 'index'])->name('computers'
 
 Route::get('/items', ItemController::class)->name('items');
 
-Route::get('/categories', function () {
-    return view('dashboard');
-})->name('categories');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
 
 Route::get('/transactions', TransactionController::class)->name('transactions');
 
