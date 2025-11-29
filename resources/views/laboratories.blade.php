@@ -1,30 +1,11 @@
 @extends('layouts.master')
 
-@php
-    $labs = [
-        [
-            'id' => 1,
-            'label' => 'A',
-            'status' => 'Active',
-            'computerCount' => 10,
-            'itemCount' => 35,
-        ],
-        [
-            'id' => 2,
-            'label' => 'B',
-            'status' => 'Maintenance',
-            'computerCount' => 12,
-            'itemCount' => 48,
-        ],
-    ];
-@endphp
-
 @section('content')
     <h1 class="m-4 fw-bold" style="color: #636363;">Laboratories</h1>
-    <div class="d-flex flex-wrap p-5 gap-3 justify-content-center">
+    <div class="d-flex flex-wrap gap-3 justify-content-center">
         @foreach ($labs as $lab)
-            <x-lab-display label="{{ $lab['label'] }}" status="{{ $lab['status'] }}" :computerCount="$lab['computerCount']" :itemCount="$lab['itemCount']"
-                :id="$lab['id']" />
+            <x-lab-display label="{{ $lab->name }}" status="{{ $lab->status }}" :computerCount="$lab->computers_count" :activeCount="$lab->active_count"
+                :inactiveCount="$lab->inactive_count" :maintenanceCount="$lab->maintenance_count" :id="$lab->id" />
         @endforeach
     </div>
 @endsection

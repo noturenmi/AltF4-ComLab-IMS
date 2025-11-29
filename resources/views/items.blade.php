@@ -1,14 +1,7 @@
 @extends('layouts.master')
 
 @php
-    $items = [
-        ['category' => 'HDMI Cable', 'quantity' => 23, 'status' => 'low stock'],
-        ['category' => 'Office Mouse', 'quantity' => 60, 'status' => 'available'],
-        ['category' => 'Membrane Keyboard', 'quantity' => 84, 'status' => 'available'],
-        ['category' => 'ID Cards', 'quantity' => 0, 'status' => 'out of stock'],
-    ];
-
-    $statuses = ['available', 'low stock', 'out of stock'];
+    $statuses = ['Available', 'Low Stock', 'Out of Stock'];
 @endphp
 
 @section('content')
@@ -34,7 +27,7 @@
             </select>
         </div>
 
-        <table id="item-table" class="table table-sm align-middle">
+        <table id="item-table" class="table align-middle">
             <thead>
                 <tr>
                     <th style='width: 5%'></th>
@@ -44,8 +37,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($items as $item)
-                    <x-item-row category="{{ $item['category'] }}" :quantity="$item['quantity']" status="{{ $item['status'] }}" />
+                @foreach ($categories as $cat)
+                    <x-item-row category="{{ $cat->name }}" :quantity="$cat->items_sum_quantity"
+                        status="{{ $cat->items_sum_quantity > 10 ? $statuses[0] : ($cat->items_sum_quantity > 0 ? $statuses[1] : $statuses[2]) }} " />
                 @endforeach
             </tbody>
         </table>

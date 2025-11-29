@@ -1,7 +1,7 @@
 @php
     $pages = ['dashboard', 'laboratories', 'computers', 'items', 'categories', 'transactions', 'reports'];
 @endphp
-<nav class="navbar navbar-dark p-3" style="background: #0C2B4E;">
+<nav class="navbar navbar-dark sticky-top p-3" style="background: #0C2B4E;">
     <div class="container-fluid">
         <div class="d-flex align-items-center">
             <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"

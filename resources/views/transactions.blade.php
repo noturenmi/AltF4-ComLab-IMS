@@ -1,31 +1,7 @@
 @extends('layouts.master')
 
 @php
-    $transactions = [
-        [
-            'id' => 1,
-            'user' => 'John Doe',
-            'action' => 'create',
-            'timestamp' => '2025-09-15 12:34:45',
-            'desc' => 'Laboratory',
-        ],
-        [
-            'id' => 2,
-            'user' => 'Jane Doe',
-            'action' => 'edit',
-            'timestamp' => '2025-10-28 17:34:45',
-            'desc' => 'Computer',
-        ],
-        [
-            'id' => 3,
-            'user' => 'Jimmy James',
-            'action' => 'delete',
-            'timestamp' => '2025-12-04 08:36:45',
-            'desc' => 'Item',
-        ],
-    ];
-
-    $actions = ['create', 'edit', 'delete'];
+    $actions = ['ADD', 'UPDATE', 'DELETE'];
 @endphp
 
 @section('content')
@@ -56,15 +32,16 @@
                 <tr>
                     <th style='width: 5%'></th>
                     <th scope='col' class="text-center">Action</th>
-                    <th scope='col'>Description</th>
+                    <th scope='col'>Remarks</th>
                     <th scope='col' class="text-center">Date & Time</th>
                     <th scope='col' class="text-center">User</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($transactions as $tr)
-                    <x-transact-row action="{{ $tr['action'] }}" desc="{{ $tr['desc'] }}"
-                        timestamp="{{ $tr['timestamp'] }}" user="{{ $tr['user'] }}" :id="$tr['id']" />
+                    <x-transact-row action="{{ $tr->type }}" desc="{{ $tr->remarks }}"
+                        timestamp="{{ $tr->created_at }}" user="{{ join(' ', $tr->user->makeHidden('id')->toArray()) }}"
+                        :id="$tr->id" />
                 @endforeach
             </tbody>
         </table>
