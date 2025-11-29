@@ -23,7 +23,7 @@
     </style>
 </head>
 
-<body>
+<body class="pb-5">
     @if (!(request()->is('login') || request()->is('register')))
         <x-navbar />
     @endif

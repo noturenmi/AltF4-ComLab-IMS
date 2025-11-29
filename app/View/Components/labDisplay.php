@@ -16,18 +16,31 @@ class labDisplay extends Component
 
     public int $computerCount;
 
-    public int $itemCount;
+    public int $activeCount;
+
+    public int $inactiveCount;
+
+    public int $maintenanceCount;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int $id, string $label, string $status, int $computerCount, int $itemCount)
-    {
+    public function __construct(
+        int $id,
+        string $label,
+        string $status,
+        int $computerCount,
+        int $activeCount,
+        int $inactiveCount,
+        int $maintenanceCount,
+    ) {
         $this->id = $id;
         $this->$label = $label;
         $this->$status = $status;
         $this->$computerCount = $computerCount;
-        $this->$itemCount = $itemCount;
+        $this->$activeCount = $activeCount;
+        $this->$inactiveCount = $inactiveCount;
+        $this->$maintenanceCount = $maintenanceCount;
     }
 
     /**
