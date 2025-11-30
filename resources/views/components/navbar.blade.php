@@ -1,6 +1,9 @@
 @php
     $pages = ['dashboard', 'laboratories', 'computers', 'items', 'categories', 'transactions', 'reports'];
 @endphp
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 <nav class="navbar navbar-dark sticky-top p-3" style="background: #0C2B4E;">
     <div class="container-fluid">
         <div class="d-flex align-items-center">
@@ -8,7 +11,7 @@
                 aria-controls="offcanvasScrolling" class="btn mb-0 fw-bold fs-2 mx-4 text-light">
                 <i class="bi bi-list"></i>
             </button>
-            <span class="mb-0 fs-3 fw-bold text-light">AltF4Solutions</span>
+            <span class="fs-3 fw-bold text-light">AltF4Solutions</span>
         </div>
     </div>
 
@@ -24,13 +27,27 @@
             <ul class="nav flex-column">
                 @foreach ($pages as $page)
                     <li class="nav-item fs-4 my-1">
-                        <a href="{{ route($page) }}" class="nav-link text-light
-                        @if (request()->is($page)) active fw-bold"
-                        aria-current="page"
-                        @else " @endif
-                    >{{ ucwords($page) }}</a>
+                        <a href="{{ route($page) }}"
+                            class="nav-link text-light
+                        {{ request()->is($page) ? 'active fw-bold' : '' }}"
+                            {{ request()->is($page) ? "aria-current='page'" : '' }}>
+                            {{ ucwords($page) }}
+                        </a>
                     </li>
- @endforeach
+                @endforeach
+                <hr>
+
+                <li class="nav-item fs-4 my-1">
+                    <a href="" class="nav-link text-light">User Settings</a>
+                </li>
+
+                <li class="nav-item fs-4 my-1">
+                    <a href="{{ route('logout') }}" class="nav-link text-light"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

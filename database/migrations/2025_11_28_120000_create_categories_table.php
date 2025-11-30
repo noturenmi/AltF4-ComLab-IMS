@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('icon', 50)->default('box');
+            $table->string('color', 6);
             $table->timestamps();
             $table->softDeletes();
         });

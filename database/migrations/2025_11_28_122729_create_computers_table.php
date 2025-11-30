@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('computers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('lab_id');
+            $table->unsignedBigInteger('lab_id')->nullable();
             $table->string('name');
             $table->string('model');
             $table->enum('status', ['Active', 'Inactive', 'Maintenance']);

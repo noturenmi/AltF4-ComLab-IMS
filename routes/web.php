@@ -5,6 +5,8 @@ use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LabController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,26 +14,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
 
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.validate');
 
-Route::get('/dashboard', DashboardController::class)->name('dashboard');
+Route::middleware('auth')->group(function () {
 
-Route::get('/laboratories', [LabController::class, 'index'])->name('laboratories');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/computers', [ComputerController::class, 'index'])->name('computers');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-Route::get('/items', ItemController::class)->name('items');
+    Route::get('/laboratories', [LabController::class, 'index'])->name('laboratories');
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::get('/computers', [ComputerController::class, 'index'])->name('computers');
 
-Route::get('/transactions', TransactionController::class)->name('transactions');
+    Route::get('/items', ItemController::class)->name('items');
 
-Route::get('/reports', function () {
-    return view('dashboard');
-})->name('reports');
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+
+    Route::get('/transactions', TransactionController::class)->name('transactions');
+
+    Route::get('/reports', function () {
+        return view('dashboard');
+    })->name('reports');
+
+});
