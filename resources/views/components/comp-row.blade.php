@@ -20,7 +20,9 @@
 
 <tr>
     <th scope='row'>{{ $name }}</th>
-    <td>{{ $lab }}</td>
+    @if (isset($lab))
+        <td>{{ $lab }}</td>
+    @endif
     <td class="text-secondary">{{ $model }}</td>
     <td class="text-center">
         <p class="badge rounded px-2"

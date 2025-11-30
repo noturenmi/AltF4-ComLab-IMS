@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/laboratories', [LabController::class, 'index'])->name('laboratories');
+    Route::post('/laboratories', [LabController::class, 'newLab'])->name('laboratories.new');
+    Route::get('/laboratory/{id}', [LabController::class, 'editLab'])->name('laboratories.edit');
+    Route::patch('/laboratory/{laboratory}', [LabController::class, 'patchLab'])->name('laboratory.update');
+    Route::delete('/laboratory/{id}', [LabController::class, 'deleteLab'])->name('laboratories.delete');
 
     Route::get('/computers', [ComputerController::class, 'index'])->name('computers');
 

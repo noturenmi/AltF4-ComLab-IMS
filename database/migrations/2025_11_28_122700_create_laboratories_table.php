@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('laboratories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('status', ['Occupied', 'Available', 'Maintenance']);
+            $table->enum('status', ['Occupied', 'Available', 'Maintenance'])->default('Maintenance');
             $table->timestamps();
             $table->softDeletes();
         });
