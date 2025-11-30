@@ -56,7 +56,7 @@
                             </div>
                             <div class="modal-body">
                                 <form id="delete-lab-{{ $id }}-form"
-                                    action="{{ route('laboratories.delete', ['id' => $id]) }}" method="POST"
+                                    action="{{ route('laboratory.delete', ['id' => $id]) }}" method="POST"
                                     style="display: none;">
                                     @method('DELETE')
                                     @csrf

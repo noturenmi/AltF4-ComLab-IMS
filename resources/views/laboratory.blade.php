@@ -50,8 +50,8 @@
             <tbody>
                 @foreach ($labComputers as $computer)
                     <x-comp-row name="{{ $computer->name }}" model="{{ $computer->model }}"
-                        status="{{ $computer->status }}" assignedDate="{{ $computer->assigned_date }}"
-                        :id="$computer->id" />
+                        status="{{ $computer->status }}" assignedDate="{{ $computer->assigned_date }}" :id="$computer->id"
+                :laboratories="$laboratories" />
                 @endforeach
             </tbody>
         </table>

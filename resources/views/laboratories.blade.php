@@ -38,7 +38,7 @@
         @endif
 
         <div class="card-body d-flex flex-wrap gap-3 justify-content-center">
-            @foreach ($labs as $lab)
+            @foreach ($laboratories as $lab)
                 <x-lab-display label="{{ $lab->name }}" status="{{ $lab->status }}" :computerCount="$lab->computers_count" :activeCount="$lab->active_count"
                     :inactiveCount="$lab->inactive_count" :maintenanceCount="$lab->maintenance_count" :id="$lab->id" />
             @endforeach

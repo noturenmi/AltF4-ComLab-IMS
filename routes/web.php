@@ -30,9 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/laboratories', [LabController::class, 'newLab'])->name('laboratories.new');
     Route::get('/laboratory/{id}', [LabController::class, 'editLab'])->name('laboratories.edit');
     Route::patch('/laboratory/{laboratory}', [LabController::class, 'patchLab'])->name('laboratory.update');
-    Route::delete('/laboratory/{id}', [LabController::class, 'deleteLab'])->name('laboratories.delete');
+    Route::delete('/laboratory/{id}', [LabController::class, 'deleteLab'])->name('laboratory.delete');
 
     Route::get('/computers', [ComputerController::class, 'index'])->name('computers');
+    Route::post('/computers', [ComputerController::class, 'newComp'])->name('computers.new');
+    Route::patch('/computer/{id}', [ComputerController::class, 'patchComp'])->name('computer.update');
+    Route::delete('/computer/{id}', [ComputerController::class, 'deleteComp'])->name('computer.delete');
 
     Route::get('/items', ItemController::class)->name('items');
 

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lab_id')->nullable();
             $table->string('name');
             $table->string('model');
-            $table->enum('status', ['Active', 'Inactive', 'Maintenance']);
+            $table->enum('status', ['Active', 'Inactive', 'Maintenance'])->default('Inactive');
             $table->date('assigned_date');
             $table->timestamps();
             $table->softDeletes();

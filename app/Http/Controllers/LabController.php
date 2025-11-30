@@ -12,9 +12,9 @@ class LabController extends Controller
 
     public function index(): View
     {
-        $labs = Laboratory::withComputerStats()->get();
+        $laboratories = Laboratory::withComputerStats()->get();
 
-        return view('laboratories', compact('labs'));
+        return view('laboratories', compact('laboratories'));
     }
 
     public function newLab(Request $request)
@@ -37,8 +37,9 @@ class LabController extends Controller
     {
         $laboratory = Laboratory::find($id);
         $labComputers = $laboratory->computers()->get();
+        $laboratories = Laboratory::select('id', 'name')->get();
 
-        return view('laboratory', compact('laboratory', 'labComputers'));
+        return view('laboratory', compact('laboratory', 'labComputers', 'laboratories'));
     }
 
     public function patchLab(Laboratory $laboratory, Request $request)
