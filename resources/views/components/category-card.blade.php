@@ -6,7 +6,7 @@
                 <i class="bi bi-{{ $category->icon }}"></i>
             </div>
         </div>
-        <h4 class="card-subtitle text-muted">{{ $category->items->count() ?? 0 }} Unique Items</h4>
+        <h4 class="card-subtitle text-muted mt-1">{{ $category->items->count() ?? 0 }} Unique Items</h4>
         <p class="card-subtitle text-muted mt-2">{{ $category->description }}</p>
 
         <div class="d-flex justify-content-center gap-3 mt-5 mb-3">

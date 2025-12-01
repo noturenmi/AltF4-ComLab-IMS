@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/computers', ComputerController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/items', ItemController::class);
+    Route::resource('/transactions', TransactionController::class);
 
     Route::get('/transactions', TransactionController::class)->name('transactions');
 

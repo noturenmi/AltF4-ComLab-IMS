@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('model');
             $table->enum('status', ['Active', 'Inactive', 'Maintenance'])->default('Inactive');
-            $table->date('assigned_date');
+            $table->date('assigned_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('lab_id')->references('id')->on('laboratories');

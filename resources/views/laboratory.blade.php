@@ -6,12 +6,12 @@
 
 @section('content')
     <div class="container d-flex justify-content-between align-items-baseline">
-        <a href="{{ route('laboratories') }}" class="btn btn-secondary mt-5"><i class="bi bi-chevron-left"></i>
+        <a href="{{ route('laboratories.index') }}" class="btn btn-secondary mt-5"><i class="bi bi-chevron-left"></i>
             Back to Laboratories</a>
         <button type="submit" form="lab-{{ $laboratory->id }}-form" class="btn btn-primary">Save Changes</button>
     </div>
 
-    <form action="{{ route('laboratory.update', $laboratory) }}" method="POST" id="lab-{{ $laboratory->id }}-form"
+    <form action="{{ route('laboratories.update', $laboratory) }}" method="POST" id="lab-{{ $laboratory->id }}-form"
         class="container card my-4 p-2 gap-3">
         @method('PATCH')
         @csrf
@@ -49,8 +49,7 @@
             </thead>
             <tbody>
                 @foreach ($labComputers as $computer)
-                    <x-comp-row :id="$computer->id" :name="$computer->name" :model="$computer->model" :status="$computer->status" :assignedDate="$computer->assigned_date"
-                        :laboratories="$laboratories" :lab="$laboratory->name" />
+                    <x-comp-row :id="$computer->id" :computer="$computer" :laboratories="$laboratories" />
                 @endforeach
             </tbody>
         </table>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -41,11 +43,13 @@ class ItemController extends Controller
             ]
         );
 
-        Item::create([
+        $item = Item::with('category')->create([
             'name' => $validated['item_name'],
             'quantity' => $validated['item_quantity'],
             'category_id' => $validated['item_cat'],
         ]);
+
+        Transaction::logCreate(Auth::user(), $item->category, $item);
 
         return redirect()->back()->with('success', $validated['item_name'].' has been created!');
     }
@@ -68,11 +72,21 @@ class ItemController extends Controller
             ]
         );
 
-        $item->update([
+        $updated = $item->update([
             'name' => $validated['item_name'] ?? $item->name,
             'quantity' => $validated['item_quantity'] ?? $item->quantity,
             'category_id' => $validated['item_cat'] ?? $item->category_id,
         ]);
+
+        if ($updated) {
+            $updatedItem = $item->fresh();
+
+            if ($item->category_id != $updatedItem->category_id) {
+                Transaction::logUpdate(Auth::user(), $updatedItem->category, $updatedItem);
+            } else {
+                Transaction::logUpdate(Auth::user(), $updatedItem);
+            }
+        }
 
         return redirect()->back()->with('success', $item->name.' has been updated!');
     }
@@ -80,6 +94,8 @@ class ItemController extends Controller
     public function destroy(Item $item): RedirectResponse
     {
         $item->delete();
+
+        Transaction::logDelete(Auth::user(), $item);
 
         return redirect()->back()->with('success', $item->name.' has been deleted');
     }

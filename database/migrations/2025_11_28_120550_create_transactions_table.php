@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->text('remarks');
-            $table->enum('type', ['ADD', 'UPDATE', 'DELETE']);
+            $table->enum('type', ['CREATE', 'UPDATE', 'DELETE']);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');

@@ -23,7 +23,7 @@
 <tr>
     <th scope='row'>{{ $computer->name }}</th>
     @if (!request()->segment(2) || !is_numeric(request()->segment(2)))
-        <td>{{ $computer->laboratory->name }}</td>
+        <td>{{ $computer->laboratory?->name ?: '' }}</td>
     @endif
     <td class="text-secondary">{{ $computer->model }}</td>
     <td class="text-center">
@@ -67,9 +67,9 @@
                                     <label for="comp-model">Computer Model</label>
                                 </div>
                                 <select name="comp_lab" class="form-select">
-                                    <option value="" selected>Select Laboratory</option>
+                                    <option value="" selected>No Laboratory</option>
                                     @foreach ($laboratories as $laboratory)
-                                        <option value="{{ $laboratory->id }}" @selected($computer->laboratory->name == $laboratory->name)>
+                                        <option value="{{ $laboratory->id }}" @selected($computer->laboratory?->name ?: '' == $laboratory->name)>
                                             {{ $laboratory->name }}</option>
                                     @endforeach
                                 </select>

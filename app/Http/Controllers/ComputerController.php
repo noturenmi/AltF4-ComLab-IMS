@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Computer;
 use App\Models\Laboratory;
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComputerController extends Controller
 {
-    private static $compModelNamePattern = '/^(?:[A-Z0-9][^ ]*(?: [A-Z0-9][^ ]*)*)?$/';
+    private static $compModelNamePattern = '/^(?:[A-Z0-9-][^ ]*(?: [A-Z0-9-][^ ]*)*)?$/';
 
     public function index(): View
     {
@@ -34,13 +36,19 @@ class ComputerController extends Controller
                 'comp_lab.exists' => 'Laboratory not found!',
             ]);
 
-        Computer::create([
+        $computer = Computer::with('laboratory')->create([
             'name' => $validated['comp_name'],
             'model' => $validated['comp_model'],
             'lab_id' => $validated['comp_lab'],
         ]);
 
-        return redirect()->route('computers');
+        if (! empty($computer->laboratory)) {
+            Transaction::logCreate(Auth::user(), $computer->laboratory, $computer);
+        } else {
+            Transaction::logCreate(Auth::user(), $computer);
+        }
+
+        return redirect()->back()->with('success', $computer->name.' has been created!');
     }
 
     public function update(Request $request, Computer $computer): RedirectResponse
@@ -58,12 +66,20 @@ class ComputerController extends Controller
                 'comp_status' => 'Invalid status!',
             ]);
 
-        $computer->update([
+        $updated = $computer->update([
             'name' => $validated['comp_name'] ?? $computer->name,
             'model' => $validated['comp_model'] ?? $computer->model,
-            'lab_id' => $validated['comp_lab'] ?? $computer->lab_id,
+            'lab_id' => $validated['comp_lab'] ?? null,
             'status' => $validated['comp_status'] ?? $computer->status,
         ]);
+
+        $updatedComp = $computer->fresh()->load('laboratory');
+
+        if ($updated && $computer->wasChanged('lab_id')) {
+            Transaction::logUpdate(Auth::user(), $updatedComp->laboratory, $updatedComp);
+        } else {
+            Transaction::logUpdate(Auth::user(), $updatedComp);
+        }
 
         return redirect()->back()->with('success', $computer->name.' has been updated!');
     }
@@ -72,6 +88,8 @@ class ComputerController extends Controller
     {
         $computer->delete();
 
-        return redirect()->route('computers')->with('success', $computer->name.' has been deleted');
+        Transaction::logDelete(Auth::user(), $computer);
+
+        return redirect()->back()->with('success', $computer->name.' has been deleted');
     }
 }

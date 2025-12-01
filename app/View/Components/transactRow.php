@@ -4,30 +4,24 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class transactRow extends Component
 {
     public int $id;
 
-    public string $user;
-
-    public string $action;
-
-    public string $timestamp;
-
-    public string $desc;
+    public Collection $transaction;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int $id, string $user, string $action, string $timestamp, string $desc)
-    {
+    public function __construct(
+        int $id,
+        Collection $transaction
+    ) {
         $this->id = $id;
-        $this->user = $user;
-        $this->action = $action;
-        $this->timestamp = $timestamp;
-        $this->desc = $desc;
+        $this->transaction = $transaction;
     }
 
     /**

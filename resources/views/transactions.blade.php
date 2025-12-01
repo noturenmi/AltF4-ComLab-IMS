@@ -1,14 +1,14 @@
 @extends('layouts.master')
 
 @php
-    $actions = ['ADD', 'UPDATE', 'DELETE'];
+    $actions = ['CREATE', 'UPDATE', 'DELETE'];
 @endphp
 
 @section('content')
-    <h1 class="m-4 fw-bold" style="color: #636363;">Transactions</h1>
+    <h1 class="m-4 fw-bold text-center" style="color: #636363;">Transactions</h1>
     <div class="container card pt-4">
         <div class="d-flex gap-3">
-            <input type="text" id="filter-category" class="form-control" placeholder="Filter Description or User">
+            <input type="text" id="filter-category" class="form-control" placeholder="Filter Remarks or User">
             <select id="filter-status" class="form-select">
                 <option value="" selected>All Actions</option>
                 @foreach ($actions as $action)
@@ -22,8 +22,8 @@
                 <option value="quantity">Sort by User</option>
             </select>
             <select id="sort-order" class="form-select">
-                <option value="asc" selected>Ascending</option>
-                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+                <option value="desc" selected>Descending</option>
             </select>
         </div>
 
@@ -38,10 +38,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($transactions as $tr)
-                    <x-transact-row action="{{ $tr->type }}" desc="{{ $tr->remarks }}"
-                        timestamp="{{ $tr->created_at }}" user="{{ join(' ', $tr->user->makeHidden('id')->toArray()) }}"
-                        :id="$tr->id" />
+                @foreach ($transactions as $transaction)
+                    <x-transact-row :transaction="$transaction" />
                 @endforeach
             </tbody>
         </table>

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -84,14 +86,16 @@ class CategoryController extends Controller
                 'cat_desc.max' => 'Category description is limited to 200 characters!',
             ]);
 
-        Category::create([
+        $category = Category::create([
             'name' => $validated['cat_name'],
             'description' => $validated['cat_desc'],
             'icon' => $validated['cat_icon'],
             'color' => $validated['cat_color'],
         ]);
 
-        return redirect()->route('categories')->with('success', $validated['cat_name'].' has been created!');
+        Transaction::logCreate(Auth::user(), $category);
+
+        return redirect()->back()->with('success', $validated['cat_name'].' has been created!');
     }
 
     public function edit(Category $category): View
@@ -104,7 +108,7 @@ class CategoryController extends Controller
         return view('category', compact('category', 'items', 'categories', 'icons', 'colors'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Category $category): RedirectResponse
     {
 
         $validated = $request->validate(
@@ -118,21 +122,26 @@ class CategoryController extends Controller
                 'cat_desc.max' => 'Category description is limited to 200 characters!',
             ]);
 
-        $category->update([
+        $updated = $category->update([
             'name' => $validated['cat_name'] ?? $category->name,
             'description' => $validated['cat_desc'] ?? $category->description,
             'icon' => $validated['cat_icon'] ?? $category->icon,
             'color' => $validated['cat_color'] ?? $category->color,
         ]);
 
+        if ($updated) {
+            Transaction::logUpdate(Auth::user(), $category->fresh());
+        }
+
         return redirect()->back()->with('success', $category->name.' has been updated!');
     }
 
-    public function destroy(int $id): RedirectResponse
+    public function destroy(Category $category): RedirectResponse
     {
-        $category = Category::find($id);
         $category->delete();
 
-        return redirect()->route('categories');
+        Transaction::logDelete(Auth::user(), $category);
+
+        return redirect()->back()->with('success', $category->name.' has been deleted!');
     }
 }

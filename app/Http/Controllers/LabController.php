@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laboratory;
+use App\Models\Transaction;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LabController extends Controller
 {
@@ -29,9 +31,11 @@ class LabController extends Controller
                 'lab_name.regex' => 'Lab Names must start with an uppercase letter or a digit!',
             ]);
 
-        Laboratory::create(['name' => $validated['lab_name']]);
+        $laboratory = Laboratory::create(['name' => $validated['lab_name']]);
 
-        return redirect()->route('laboratories');
+        Transaction::logCreate(Auth::user(), $laboratory);
+
+        return redirect()->back()->with('success', $laboratory->name.' has been created!');
     }
 
     public function edit(Laboratory $laboratory): View
@@ -55,12 +59,14 @@ class LabController extends Controller
                 'lab_status.in' => 'Invalid Laboratory Status!',
             ]);
 
-        $updateData = [
+        $updated = $laboratory->update([
             'name' => $validated['lab_name'] ?? $laboratory->name,
             'status' => $validated['lab_status'] ?? $laboratory->status,
-        ];
+        ]);
 
-        $laboratory->update($updateData);
+        if ($updated) {
+            Transaction::logUpdate(Auth::user(), $laboratory->fresh());
+        }
 
         return redirect()->back()->with('success', $laboratory->name.' has been updated!');
     }
@@ -69,6 +75,8 @@ class LabController extends Controller
     {
         $laboratory->delete();
 
-        return redirect()->route('laboratories')->with('success', $laboratory->name.' has been deleted!');
+        Transaction::logDelete(Auth::user(), $laboratory);
+
+        return redirect()->back()->with('success', $laboratory->name.' has been deleted!');
     }
 }
