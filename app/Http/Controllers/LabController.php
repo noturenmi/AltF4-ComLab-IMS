@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Laboratory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LabController extends Controller
@@ -17,7 +18,7 @@ class LabController extends Controller
         return view('laboratories', compact('laboratories'));
     }
 
-    public function newLab(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate(
             [
@@ -33,16 +34,15 @@ class LabController extends Controller
         return redirect()->route('laboratories');
     }
 
-    public function editLab(int $id)
+    public function edit(Laboratory $laboratory): View
     {
-        $laboratory = Laboratory::find($id);
         $labComputers = $laboratory->computers()->get();
         $laboratories = Laboratory::select('id', 'name')->get();
 
         return view('laboratory', compact('laboratory', 'labComputers', 'laboratories'));
     }
 
-    public function patchLab(Laboratory $laboratory, Request $request)
+    public function update(Request $request, Laboratory $laboratory): RedirectResponse
     {
         $validated = $request->validate(
             [
@@ -62,14 +62,13 @@ class LabController extends Controller
 
         $laboratory->update($updateData);
 
-        return redirect()->back()->with('success', 'Laboratory Updated!');
+        return redirect()->back()->with('success', $laboratory->name.' has been updated!');
     }
 
-    public function deleteLab(int $id)
+    public function destroy(Laboratory $laboratory): RedirectResponse
     {
-        $laboratory = Laboratory::find($id);
         $laboratory->delete();
 
-        return redirect()->route('laboratories');
+        return redirect()->route('laboratories')->with('success', $laboratory->name.' has been deleted!');
     }
 }

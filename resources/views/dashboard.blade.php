@@ -41,8 +41,7 @@
 
             @foreach ($cards as $card)
                 <div class="flex-grow-1">
-                    <x-dashboard-counter label="{{ $card['label'] }}" counter="{{ $card['counter'] }}"
-                        color="{{ $card['color'] }}" bg="{{ $card['bg'] }}">
+                    <x-dashboard-counter :label="$card['label']" :counter="$card['counter']" :color="$card['color']" :bg="$card['bg']">
                         <i class="bi bi-{{ $card['icon'] }}"></i>
                         </ x-dashboard-counter>
                 </div>
@@ -51,7 +50,7 @@
         </div>
 
         <div class="mt-4" style="min-height: 20vh;">
-            <x-dashboard-counter label="Transactions Today" counter="{{ $transTodayCount }}" color="#9A16FA" bg="#F3E8FF">
+            <x-dashboard-counter label="Transactions Today" :counter="$transTodayCount" color="#9A16FA" bg="#F3E8FF">
                 <i class="bi bi-file-text"></i></x-dashboard-counter>
         </div>
     </div>

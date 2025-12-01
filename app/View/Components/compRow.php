@@ -11,15 +11,7 @@ class compRow extends Component
 {
     public int $id;
 
-    public string $name;
-
-    public string $lab;
-
-    public string $model;
-
-    public string $status;
-
-    public string $assignedDate;
+    public Collection $computer;
 
     public Collection $laboratories;
 
@@ -28,19 +20,11 @@ class compRow extends Component
      */
     public function __construct(
         int $id,
-        string $name,
-        string $lab,
-        string $model,
-        string $status,
-        string $assignedDate,
+        Collection $computer,
         Collection $laboratories
     ) {
         $this->id = $id;
-        $this->name = $name;
-        $this->lab = $lab;
-        $this->model = $model;
-        $this->status = $status;
-        $this->assignedDate = $assignedDate;
+        $this->computer = $computer;
         $this->laboratories = $laboratories;
     }
 

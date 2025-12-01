@@ -16,14 +16,6 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * @return BelongsTo<Item,Transaction>
-     */
-    public function item(): BelongsTo
-    {
-        return $this->belongsTo(Item::class, 'item_id');
-    }
-
     public static function getTransactionsToday()
     {
         return self::whereDate('created_at', today())->get();
@@ -34,6 +26,6 @@ class Transaction extends Model
      */
     public static function getTransactionsWithUser(): Collection
     {
-        return self::with('user:id,first_name,middle_name,last_name')->get();
+        return self::with('user:id,first_name,last_name')->get();
     }
 }

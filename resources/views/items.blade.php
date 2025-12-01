@@ -7,6 +7,59 @@
 @section('content')
     <h1 class="m-4 fw-bold text-center" style="color: #636363;">Items</h1>
     <div class="container card pt-4">
+
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">{{ $error }}</div>
+            @endforeach
+        @endif
+
+        <button class="btn rounded-3 mx-4 mb-3 text-light fw-bold align-self-end" style="background: #5C6BA1;"
+            data-bs-toggle="modal" data-bs-target="#new-item-modal">
+            <i class="bi bi-plus-square-fill mx-1" style="color: #D9D9D9;"></i> Add Item</button>
+
+        <div class="modal fade" id="new-item-modal" tabindex="-1" aria-labelledby="new-item-modal-label"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="new-item-modal-label">New Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('items.store') }}" method="POST" id="new-item"
+                            class="d-flex flex-column gap-3">
+                            @csrf
+                            <div class="form-floating">
+                                <input type="text" name="item_name" class="form-control" placeholder=""
+                                    autocomplete="off">
+                                <label>Item Name</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="text" name="item_quantity" class="form-control" placeholder=""
+                                    autocomplete="off">
+                                <label>Item Quantity</label>
+                            </div>
+                            <select name="item_cat" class="form-select">
+                                <option value="" selected>Select Category</option>
+                                @foreach ($categories as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" form="new-item" class="btn btn-success">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex gap-3">
             <input type="text" id="filter-category" class="form-control" placeholder="Filter Category">
             <select id="filter-status" class="form-select">
@@ -16,6 +69,7 @@
                 @endforeach
             </select>
         </div>
+
         <div class="d-flex my-3 gap-3">
             <select id="sort-column" class="form-select">
                 <option value="category" selected>Sort by Category</option>
@@ -31,15 +85,16 @@
             <thead>
                 <tr>
                     <th style='width: 5%'></th>
+                    <th scope='col'>Name</th>
                     <th scope='col'>Category</th>
                     <th scope='col' class="text-center">Quantity</th>
                     <th scope='col' class="text-center">Status</th>
+                    <th scope='col' class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $cat)
-                    <x-item-row category="{{ $cat->name }}" :quantity="$cat->items_sum_quantity"
-                        status="{{ $cat->items_sum_quantity > 10 ? $statuses[0] : ($cat->items_sum_quantity > 0 ? $statuses[1] : $statuses[2]) }} " />
+                @foreach ($items as $item)
+                    <x-item-row :id="$item->category->id" :item="$item" :categories="$categories" />
                 @endforeach
             </tbody>
         </table>
@@ -50,9 +105,9 @@
 
         const filterCat = document.querySelector("#filter-category");
         const filterStat = document.querySelector("#filter-status");
-        const catColIndex = 1;
-        const quantiColIndex = 2;
-        const statColIndex = 3;
+        const catColIndex = 2;
+        const quantiColIndex = 3;
+        const statColIndex = 4;
 
         const sortCol = document.querySelector("#sort-column");
         const sortOrd = document.querySelector("#sort-order");

@@ -1,5 +1,5 @@
 @php
-    $pages = ['dashboard', 'laboratories', 'computers', 'items', 'categories', 'transactions', 'reports'];
+    $pages = ['dashboard', 'laboratories', 'computers', 'categories', 'items'];
 @endphp
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
@@ -27,7 +27,7 @@
             <ul class="nav flex-column">
                 @foreach ($pages as $page)
                     <li class="nav-item fs-4 my-1">
-                        <a href="{{ route($page) }}"
+                        <a href="{{ $page != 'dashboard' ? route($page . '.index') : route($page) }}"
                             class="nav-link text-light
                         {{ request()->is($page) ? 'active fw-bold' : '' }}"
                             {{ request()->is($page) ? "aria-current='page'" : '' }}>

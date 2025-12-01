@@ -14,11 +14,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
+Route::middleware('guest')->group(function () {
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.validate');
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
+
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.validate');
+
+});
 
 Route::middleware('auth')->group(function () {
 
@@ -26,20 +30,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    Route::get('/laboratories', [LabController::class, 'index'])->name('laboratories');
-    Route::post('/laboratories', [LabController::class, 'newLab'])->name('laboratories.new');
-    Route::get('/laboratory/{id}', [LabController::class, 'editLab'])->name('laboratories.edit');
-    Route::patch('/laboratory/{laboratory}', [LabController::class, 'patchLab'])->name('laboratory.update');
-    Route::delete('/laboratory/{id}', [LabController::class, 'deleteLab'])->name('laboratory.delete');
-
-    Route::get('/computers', [ComputerController::class, 'index'])->name('computers');
-    Route::post('/computers', [ComputerController::class, 'newComp'])->name('computers.new');
-    Route::patch('/computer/{id}', [ComputerController::class, 'patchComp'])->name('computer.update');
-    Route::delete('/computer/{id}', [ComputerController::class, 'deleteComp'])->name('computer.delete');
-
-    Route::get('/items', ItemController::class)->name('items');
-
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::resource('/laboratories', LabController::class);
+    Route::resource('/computers', ComputerController::class);
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/items', ItemController::class);
 
     Route::get('/transactions', TransactionController::class)->name('transactions');
 

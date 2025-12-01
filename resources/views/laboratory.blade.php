@@ -49,9 +49,8 @@
             </thead>
             <tbody>
                 @foreach ($labComputers as $computer)
-                    <x-comp-row name="{{ $computer->name }}" model="{{ $computer->model }}"
-                        status="{{ $computer->status }}" assignedDate="{{ $computer->assigned_date }}" :id="$computer->id"
-                :laboratories="$laboratories" />
+                    <x-comp-row :id="$computer->id" :name="$computer->name" :model="$computer->model" :status="$computer->status" :assignedDate="$computer->assigned_date"
+                        :laboratories="$laboratories" :lab="$laboratory->name" />
                 @endforeach
             </tbody>
         </table>

@@ -19,7 +19,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('laboratories.new') }}" method="POST" id="new-lab">
+                            <form action="{{ route('laboratories.store') }}" method="POST" id="new-lab">
                                 @csrf
                                 <div class="form-floating">
                                     <input type="text" name="lab_name" id="lab-name" class="form-control" placeholder=""
@@ -39,8 +39,7 @@
 
         <div class="card-body d-flex flex-wrap gap-3 justify-content-center">
             @foreach ($laboratories as $lab)
-                <x-lab-display label="{{ $lab->name }}" status="{{ $lab->status }}" :computerCount="$lab->computers_count" :activeCount="$lab->active_count"
-                    :inactiveCount="$lab->inactive_count" :maintenanceCount="$lab->maintenance_count" :id="$lab->id" />
+                <x-lab-display :id="$lab->id" :laboratory="$lab" />
             @endforeach
         </div>
     </div>

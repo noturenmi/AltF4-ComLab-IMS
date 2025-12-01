@@ -4,43 +4,24 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class labDisplay extends Component
 {
     public int $id;
 
-    public string $label;
-
-    public string $status;
-
-    public int $computerCount;
-
-    public int $activeCount;
-
-    public int $inactiveCount;
-
-    public int $maintenanceCount;
+    public Collection $laboratory;
 
     /**
      * Create a new component instance.
      */
     public function __construct(
         int $id,
-        string $label,
-        string $status,
-        int $computerCount,
-        int $activeCount,
-        int $inactiveCount,
-        int $maintenanceCount,
+        Collection $laboratory
     ) {
         $this->id = $id;
-        $this->$label = $label;
-        $this->$status = $status;
-        $this->$computerCount = $computerCount;
-        $this->$activeCount = $activeCount;
-        $this->$inactiveCount = $inactiveCount;
-        $this->$maintenanceCount = $maintenanceCount;
+        $this->laboratory = $laboratory;
     }
 
     /**

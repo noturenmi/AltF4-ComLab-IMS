@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('icon', 50)->default('box');
-            $table->string('color', 6);
+            $table->string('color', 6)->default('2B7FFF');
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

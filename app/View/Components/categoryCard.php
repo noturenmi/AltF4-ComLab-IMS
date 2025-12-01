@@ -4,24 +4,24 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class categoryCard extends Component
 {
     public int $id;
 
-    public string $name;
-
-    public int $itemCount;
+    public Collection $category;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int $id, string $name, int $itemCount)
-    {
+    public function __construct(
+        int $id,
+        Collection $category
+    ) {
         $this->id = $id;
-        $this->name = $name;
-        $this->itemCount = $itemCount;
+        $this->category = $category;
     }
 
     /**
