@@ -1,6 +1,6 @@
 @php
-    $badge = match (trim($action)) {
-        'ADD' => [
+    $badge = match (trim($transaction->type)) {
+        'CREATE' => [
             'color' => '#008236',
             'bg' => '#DBFCE7',
             'border' => '#7CF1A8',
@@ -22,9 +22,9 @@
     <td class="text-center">
         <p class="badge px-2 my-2"
             style="color: {{ $badge['color'] }}; background: {{ $badge['bg'] }}; border: solid 1px {{ $badge['border'] }};">
-            {{ $action }}</p>
+            {{ $transaction->type }}</p>
     </td>
-    <td>{{ $desc }}</td>
-    <td class="text-center">{{ $timestamp }}</td>
-    <td class="text-center">{{ $user }}</td>
+    <td>{{ $transaction->remarks }}</td>
+    <td class="text-center">{{ $transaction->created_at }}</td>
+    <td class="text-center">{{ join(' ', $transaction->user->makeHidden('id')->toArray()) }}</td>
 </tr>

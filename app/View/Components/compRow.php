@@ -4,33 +4,28 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class compRow extends Component
 {
     public int $id;
 
-    public string $name;
+    public Collection $computer;
 
-    public string $lab;
-
-    public string $model;
-
-    public string $status;
-
-    public string $assignedDate;
+    public Collection $laboratories;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int $id, string $name, string $lab, string $model, string $status, string $assignedDate)
-    {
+    public function __construct(
+        int $id,
+        Collection $computer,
+        Collection $laboratories
+    ) {
         $this->id = $id;
-        $this->name = $name;
-        $this->lab = $lab;
-        $this->model = $model;
-        $this->status = $status;
-        $this->assignedDate = $assignedDate;
+        $this->computer = $computer;
+        $this->laboratories = $laboratories;
     }
 
     /**

@@ -4,27 +4,28 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class itemRow extends Component
 {
     public int $id;
 
-    public string $category;
+    public Collection $item;
 
-    public int $quantity;
-
-    public string $status;
+    public Collection $categories;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(int $id, string $category, int $quantity, string $status)
-    {
+    public function __construct(
+        int $id,
+        Collection $item,
+        Collection $categories,
+    ) {
         $this->id = $id;
-        $this->category = $category;
-        $this->quantity = $quantity;
-        $this->status = $status;
+        $this->item = $item;
+        $this->categories = $categories;
     }
 
     /**

@@ -3,17 +3,100 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Item;
+use App\Models\Transaction;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke()
-    {
-        $categories = Category::withTotalQuantity()->get();
+    private static $itemNamePattern = '/^(?:[A-Z0-9][^ ]*(?: [A-Z0-9][^ ]*)*)?$/';
 
-        return view('items', compact('categories'));
+    public function index(): View
+    {
+        $items = Item::with('category:id,name')->get();
+        $categories = Category::select('id', 'name')->get();
+
+        return view('items', compact('items', 'categories'));
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate(
+            [
+                'item_name' => ['required', 'min:3', 'regex:'.self::$itemNamePattern],
+                'item_quantity' => ['required', 'numeric'],
+                'item_cat' => ['required', 'exists:categories,id'],
+            ],
+            [
+                'item_name.required' => 'Item name is required!',
+                'item_name.min' => 'Item name must be at least 3 characters long!',
+                'item_name.regex' => 'Item name must start with either an uppercase letter or a number!',
+
+                'item_quantity.required' => 'Quantity is required!',
+                'item_quantity.numeric' => 'Quantity must be numerical!',
+
+                'item_cat.required' => 'Category is required!',
+                'item_cat.exists' => 'Category not found!',
+            ]
+        );
+
+        $item = Item::with('category')->create([
+            'name' => $validated['item_name'],
+            'quantity' => $validated['item_quantity'],
+            'category_id' => $validated['item_cat'],
+        ]);
+
+        Transaction::logCreate(Auth::user(), $item->category, $item);
+
+        return redirect()->back()->with('success', $validated['item_name'].' has been created!');
+    }
+
+    public function update(Item $item, Request $request): RedirectResponse
+    {
+        $validated = $request->validate(
+            [
+                'item_name' => ['min:3', 'regex:'.self::$itemNamePattern],
+                'item_quantity' => ['numeric'],
+                'item_cat' => ['exists:categories,id'],
+            ],
+            [
+                'item_name.min' => 'Item name must be at least 3 characters long!',
+                'item_name.regex' => 'Item name must start with either an uppercase letter or a number!',
+
+                'item_quantity.numeric' => 'Quantity must be numerical!',
+
+                'item_cat.exists' => 'Category not found!',
+            ]
+        );
+
+        $updated = $item->update([
+            'name' => $validated['item_name'] ?? $item->name,
+            'quantity' => $validated['item_quantity'] ?? $item->quantity,
+            'category_id' => $validated['item_cat'] ?? $item->category_id,
+        ]);
+
+        if ($updated) {
+            $updatedItem = $item->fresh();
+
+            if ($item->category_id != $updatedItem->category_id) {
+                Transaction::logUpdate(Auth::user(), $updatedItem->category, $updatedItem);
+            } else {
+                Transaction::logUpdate(Auth::user(), $updatedItem);
+            }
+        }
+
+        return redirect()->back()->with('success', $item->name.' has been updated!');
+    }
+
+    public function destroy(Item $item): RedirectResponse
+    {
+        $item->delete();
+
+        Transaction::logDelete(Auth::user(), $item);
+
+        return redirect()->back()->with('success', $item->name.' has been deleted');
     }
 }
