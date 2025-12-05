@@ -38,10 +38,6 @@
                 <hr>
 
                 <li class="nav-item fs-4 my-1">
-                    <a href="" class="nav-link text-light">User Settings</a>
-                </li>
-
-                <li class="nav-item fs-4 my-1">
                     <a href="{{ route('logout') }}" class="nav-link text-light"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout

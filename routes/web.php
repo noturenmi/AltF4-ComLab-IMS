@@ -11,7 +11,7 @@ use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 Route::middleware('guest')->group(function () {
@@ -30,11 +30,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    Route::resource('/laboratories', LabController::class);
-    Route::resource('/computers', ComputerController::class);
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/items', ItemController::class);
-    Route::resource('/transactions', TransactionController::class);
+    Route::resource('/laboratories', LabController::class)->except(['create', 'show']);
+    Route::resource('/computers', ComputerController::class)->except(['create', 'show', 'edit']);
+    Route::resource('/categories', CategoryController::class)->except(['create', 'show']);
+    Route::resource('/items', ItemController::class)->except(['create', 'show', 'edit']);
 
     Route::get('/transactions', TransactionController::class)->name('transactions');
 

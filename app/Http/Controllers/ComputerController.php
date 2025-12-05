@@ -26,12 +26,12 @@ class ComputerController extends Controller
     {
         $validated = $request->validate(
             [
-                'comp_name' => ['alpha_num'],
+                'comp_name' => ['alpha_dash'],
                 'comp_model' => ['required', 'regex:'.self::$compModelNamePattern],
                 'comp_lab' => ['nullable', 'exists:laboratories,id'],
             ],
             [
-                'comp_name.alpha_num' => 'Computer name cannot contain spaces or special characters!',
+                'comp_name.alpha_dash' => 'Computer name can only contain letters, numbers, underscores and hyphens!',
                 'comp_model.regex' => 'Computer model must start with either an uppercase letter or a number!',
                 'comp_lab.exists' => 'Laboratory not found!',
             ]);
@@ -55,13 +55,13 @@ class ComputerController extends Controller
     {
         $validated = $request->validate(
             [
-                'comp_name' => ['alpha_num'],
+                'comp_name' => ['alpha_dash'],
                 'comp_model' => ['regex:'.self::$compModelNamePattern],
                 'comp_lab' => ['nullable', 'exists:laboratories,id'],
                 'comp_status' => ['in:Active,Inactive,Maintenance'],
             ],
             [
-                'comp_name.alpha_num' => 'Computer name cannot contain spaces or special characters!',
+                'comp_name.alpha_dash' => 'Computer name can only contain letters, numbers, underscores and hyphens!',
                 'comp_lab.exists' => 'Laboratory not found!',
                 'comp_status' => 'Invalid status!',
             ]);
